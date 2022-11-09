@@ -1,13 +1,12 @@
 package site.metacoding.miniproject.web;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import java.sql.Timestamp;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,10 +15,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.mock.web.MockCookie;
-import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
@@ -27,7 +24,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
 
 import lombok.extern.slf4j.Slf4j;
 import site.metacoding.miniproject.dto.company.CompanyReqDto.CompanyUpdateReqDto;
@@ -37,7 +33,6 @@ import site.metacoding.miniproject.dto.user.UserRespDto.SignCompanyDto;
 import site.metacoding.miniproject.dto.user.UserRespDto.SignedDto;
 import site.metacoding.miniproject.utill.JWTToken.CreateJWTToken;
 
-@Slf4j
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
@@ -107,14 +102,12 @@ public class CompanyApiControllerTest {
 
         // then
         MvcResult mvcResult = resultActions.andReturn();
-        System.out.println("debugggg:" + mvcResult.getResponse().getStatus());
         resultActions.andExpect(MockMvcResultMatchers.jsonPath("$.code").value(1));
 
     }
 
     // 채용공고 목록보기
     @Test
-
     @Sql({ "classpath:truncate.sql", "classpath:testsql/insertjobpostingboard.sql" })
     public void jobPostingBoardList_test() throws Exception {
         // given
@@ -126,7 +119,6 @@ public class CompanyApiControllerTest {
 
         // then
         MvcResult mvcResult = resultActions.andReturn();
-        System.out.println("debugggg " + mvcResult.getResponse().getContentAsString());
         resultActions.andExpect(MockMvcResultMatchers.status().isOk());
     }
 
@@ -151,7 +143,6 @@ public class CompanyApiControllerTest {
         jobPostingBoardInsertReqDto.setFiveYearOver(false);
 
         String body = om.writeValueAsString(jobPostingBoardInsertReqDto);
-        log.debug("mytest : " + body);
         // when
         ResultActions resultActions = mvc.perform(post("/s/api/jobpostingboard/insert")
                 .content(body)
@@ -183,7 +174,6 @@ public class CompanyApiControllerTest {
 
         // then
         MvcResult mvcResult = resultActions.andReturn();
-        System.out.println("debugggg:" + mvcResult.getResponse().getContentAsString());
         resultActions.andExpect(MockMvcResultMatchers.jsonPath("$.code").value(1));
     }
 
@@ -229,9 +219,6 @@ public class CompanyApiControllerTest {
         companyUpdateReqDto.setCompanyName("박동훈");
         companyUpdateReqDto.setCompanyEmail("sopu555555@naver.com");
         companyUpdateReqDto.setCompanyPhoneNumber("01024102957");
-        // MockMultipartFile file = new MockMultipartFile("image", "test.png",
-        // "image/png",
-        // new FileInputStream("C:\\Users\\GGG\\4.jpg"));
         companyUpdateReqDto.setCompanyPicture("file");
         String body = om.writeValueAsString(companyUpdateReqDto);
         // when
