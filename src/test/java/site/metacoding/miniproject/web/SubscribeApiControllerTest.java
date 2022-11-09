@@ -27,62 +27,62 @@ import site.metacoding.miniproject.utill.JWTToken.CreateJWTToken;
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 public class SubscribeApiControllerTest {
 
-    private static final String APPLICATION_JSON = "application/json; charset=utf-8";
+        private static final String APPLICATION_JSON = "application/json; charset=utf-8";
 
-    @Autowired
+        @Autowired
 
-    private MockMvc mvc;
+        private MockMvc mvc;
 
-    private static MockCookie mockCookie;
+        private static MockCookie mockCookie;
 
-    @BeforeAll
-    public static void init() {
+        @BeforeAll
+        public static void init() {
 
-        SignPersonalDto signPersonalDto = new SignPersonalDto();
+                SignPersonalDto signPersonalDto = new SignPersonalDto();
 
-        signPersonalDto.setPersonalId(1);
-        SignedDto<?> signedDto = new SignedDto<>(1, "testuser1", signPersonalDto);
+                signPersonalDto.setPersonalId(1);
+                SignedDto<?> signedDto = new SignedDto<>(1, "testuser1", signPersonalDto);
 
-        String JwtToken = CreateJWTToken.createToken(signedDto);
-        mockCookie = new MockCookie("Authorization", JwtToken);
+                String JwtToken = CreateJWTToken.createToken(signedDto);
+                mockCookie = new MockCookie("Authorization", JwtToken);
 
-    }
+        }
 
-    @BeforeEach
-    public void sessionInit() {
+        @BeforeEach
+        public void sessionInit() {
 
-    }
+        }
 
-    @Order(1)
-    @Test
-    @Sql({ "classpath:truncate.sql", "classpath:testsql/insertcompanyfortest.sql",
-            "classpath:testsql/insertuserforpersonal.sql" })
-    public void subscribeToCompany_test() throws Exception {
-        // given
-        Integer companyId = 1;
-        // when
-        ResultActions resultActions = mvc.perform(
-                get("/s/api/subscribe/" + companyId)
-                        .cookie(mockCookie).accept(APPLICATION_JSON))
-                // then
-                .andExpect(jsonPath("$.code").value("1"));
-    }
+        @Order(1)
+        @Test
+        @Sql({ "classpath:truncate.sql", "classpath:testsql/insertcompanyfortest.sql",
+                        "classpath:testsql/insertuserforpersonal.sql" })
+        public void subscribeToCompany_test() throws Exception {
+                // given
+                Integer companyId = 1;
+                // when
+                ResultActions resultActions = mvc.perform(
+                                get("/s/api/subscribe/" + companyId)
+                                                .cookie(mockCookie).accept(APPLICATION_JSON))
+                                // then
+                                .andExpect(jsonPath("$.code").value("1"));
+        }
 
-    @Order(2)
-    @Test
-    @Sql({ "classpath:truncate.sql", "classpath:testsql/insertcompanyfortest.sql",
-            "classpath:testsql/insertuserforpersonal.sql", "classpath:testsql/insertsubscribefortest.sql" })
-    public void subscribeCancelToCompany_test() throws Exception {
-        // given
-        Integer subscribeId = 1;
-        // when
+        @Order(2)
+        @Test
+        @Sql({ "classpath:truncate.sql", "classpath:testsql/insertcompanyfortest.sql",
+                        "classpath:testsql/insertuserforpersonal.sql", "classpath:testsql/insertsubscribefortest.sql" })
+        public void subscribeCancelToCompany_test() throws Exception {
+                // given
+                Integer subscribeId = 1;
+                // when
 
-        ResultActions resultActions = mvc.perform(delete("/s/api/subscribe/" + subscribeId)
-                .cookie(mockCookie)
-                .accept(APPLICATION_JSON))
+                ResultActions resultActions = mvc.perform(delete("/s/api/subscribe/" + subscribeId)
+                                .cookie(mockCookie)
+                                .accept(APPLICATION_JSON))
 
-                // then
-                .andExpect(jsonPath("$.code").value("1"));
-    }
+                                // then
+                                .andExpect(jsonPath("$.code").value("1"));
+        }
 
 }
