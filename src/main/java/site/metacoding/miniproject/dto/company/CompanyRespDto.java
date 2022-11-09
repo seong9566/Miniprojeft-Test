@@ -47,6 +47,7 @@ public class CompanyRespDto {
             this.companyPhoneNumber = companyDetailRespDto.getCompanyPhoneNumber();
             this.companyEmail = companyDetailRespDto.getCompanyEmail();
             this.companyPicture = companyDetailRespDto.getCompanyPicture();
+            this.companyAddress = companyDetailRespDto.getCompanyAddress();
             this.count = companyDetailRespDto.getCount();
         }
 
