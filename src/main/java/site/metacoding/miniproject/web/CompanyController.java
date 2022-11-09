@@ -2,6 +2,8 @@ package site.metacoding.miniproject.web;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +32,11 @@ public class CompanyController {
 
 	private final HttpSession session;
 	private final CompanyService companyService;
+
+	@GetMapping("/")
+	public ResponseEntity<?> healthCheck() {
+		return new ResponseEntity<>("success", HttpStatus.OK);
+	}
 
 	// 회사 정보 보기
 	@GetMapping("/s/api/company/detail")
