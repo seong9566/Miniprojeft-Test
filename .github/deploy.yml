@@ -47,5 +47,5 @@ jobs:
           application_name: Miniprojeft-Test # 엘리스틱 빈스톡 애플리케이션 이름!
           environment_name: Miniprojefttest-env # 엘리스틱 빈스톡 환경 이름!
           version_label: aws-v5-${{steps.current-time.outputs.formattedTime}}
-          region: us-east-1 # 서울 ap-northeast-2 버지니아북부 us-east-1
+          region: ap-northeast-2 # 서울 ap-northeast-2 버지니아북부 us-east-1
           deployment_package: deploy/deploy.zip
