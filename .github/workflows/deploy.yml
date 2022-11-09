@@ -1,15 +1,15 @@
 name: Miniprojeft-Test
 on:
   pull_request:
-      branches: 
+    branches: 
       - master
     types: [closed]
 
 # actions/setup-java@v2는 사용자 정의 배포를 지원하고 Zulu OpenJDK, Eclipse Temurin 및 Adopt OpenJDK를 기본적으로 지원합니다. v1은 Zulu OpenJDK만 지원합니다.
 jobs:
-  build: # 마음대로 적어도됨.
-  if: ${{ github.event.pull_request.merged }}
-    runs-on: ubuntu-18.04
+  build-on-merge:
+    if: ${{ github.event.pull_request.merged }}
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -47,8 +47,8 @@ jobs:
       #   with:
       #     aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
       #     aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-      #     application_name: Miniprojeft-Test # 엘리스틱 빈스톡 애플리케이션 이름!
-      #     environment_name: Miniprojefttest-env # 엘리스틱 빈스톡 환경 이름!
-      #     version_label: aws-v5-${{steps.current-time.outputs.formattedTime}}
+      #     application_name: miniproject-service # 엘리스틱 빈스톡 애플리케이션 이름!
+      #     environment_name: Miniprojectservice-env # 엘리스틱 빈스톡 환경 이름!
+      #     version_label: miniprojectservice-${{steps.current-time.outputs.formattedTime}}
       #     region: ap-northeast-2 # 서울 ap-northeast-2 버지니아북부 us-east-1
       #     deployment_package: deploy/deploy.zip
