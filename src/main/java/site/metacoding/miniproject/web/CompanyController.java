@@ -33,6 +33,11 @@ public class CompanyController {
 	private final HttpSession session;
 	private final CompanyService companyService;
 
+	@GetMapping("/")
+	public ResponseEntity<?> healthCheck() {
+		return new ResponseEntity<>("success", HttpStatus.OK);
+	}
+
 	// 회사 정보 보기
 	@GetMapping("/s/api/company/detail")
 	public ResponseDto<?> findByCompany() {
