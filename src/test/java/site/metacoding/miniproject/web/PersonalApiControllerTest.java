@@ -97,7 +97,7 @@ public class PersonalApiControllerTest {
 
         String body = om.writeValueAsString(resumesInsertReqDto);
         MockMultipartFile multipartBody = new MockMultipartFile("reqDto", "formData", APPLICATION_JSON,
-                body.getBytes());
+                body.getBytes("utf-8"));
 
         // when
         ResultActions resultActions = mvc
@@ -175,7 +175,7 @@ public class PersonalApiControllerTest {
         MockMultipartFile file = new MockMultipartFile("file", "test.jpg", "image/jpg", resource.getInputStream());
         String body = om.writeValueAsString(resumesUpdateReqDto);
         MockMultipartFile multipartBody = new MockMultipartFile("resumesUpdateReqDto", "formData", APPLICATION_JSON,
-                body.getBytes());
+                body.getBytes("utf-8"));
 
         // when
         ResultActions resultActions = mvc
